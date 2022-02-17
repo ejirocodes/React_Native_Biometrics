@@ -81,6 +81,17 @@ const App: () => Node = () => {
   };
 
   const isBiometricSupport = async () => {
+    let {available, biometryType} =
+      await ReactNativeBiometrics.isSensorAvailable();
+    if (available && biometryType === ReactNativeBiometrics.TouchID) {
+      console.log('TouchID is supported', biometryType);
+    } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+      console.log('FaceID is supported', biometryType);
+    } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
+      console.log('Biometrics is supported', biometryType);
+    } else {
+      return console.log('Biometrics not supported', biometryType);
+    }
     let {success, error} = await ReactNativeBiometrics.simplePrompt({
       promptMessage: 'Sign in with Touch ID',
       // cancelButtonText: 'Close',
